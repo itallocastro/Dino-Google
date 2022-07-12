@@ -71,7 +71,7 @@ class DinoEnv(gym.Env):
         obs = self.next_observation()
         done = self.get_done()
         reward = .1 if not done else -1
-        time.sleep(0.15)
+        time.sleep(0.015)
 
         return obs, reward, done
 

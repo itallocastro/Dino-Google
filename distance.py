@@ -27,7 +27,7 @@ class Distance:
             encoded_data = encoded_data.split(',')[1]
             nparr = np.frombuffer(base64.b64decode(encoded_data), np.uint8)
             image = cv2.imdecode(nparr, cv2.COLOR_RGB2BGR)
-            cropped_image = image[20:150, :500]
+            cropped_image = image[20:150, :]
 
             gray = cv2.cvtColor(cropped_image, cv2.COLOR_BGR2GRAY)
             gray = cv2.GaussianBlur(gray, (7, 7), 0)
@@ -81,5 +81,5 @@ class Distance:
             # print(min_dist_obstacle, height_obstacle, width_obstacle)
             return min_dist_obstacle, height_obstacle, width_obstacle
         except (Exception, ) as e:
-            pass
+            return 1000000, 100000, 1000000
 

@@ -1,7 +1,5 @@
 venv
 chromedriver
-score_per_100.txt
-scores.txt
 ws.txt
 .idea
 __pycache__
