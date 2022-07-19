@@ -44,13 +44,13 @@ class Distance:
             cnts = imutils.grab_contours(cnts)
 
             (cnts, _) = contours.sort_contours(cnts)
-            colors = ((0, 0, 255), (240, 0, 159), (0, 165, 255), (255, 255, 0),
-                      (255, 0, 255))
+
             refObj = None
 
             min_dist_obstacle = 1000000
             height_obstacle = 1000000
             width_obstacle = 1000000
+            y_coord = 1000000
             for c in cnts:
                 if cv2.contourArea(c) < 200:
                     continue
@@ -68,18 +68,15 @@ class Distance:
                     refObj = (box, (cX, cY), D / 0.8)
                     continue
 
-                orig = cropped_image.copy()
-                cv2.drawContours(orig, [box.astype("int")], -1, (0, 255, 0), 2)
-                cv2.drawContours(orig, [refObj[0].astype("int")], -1, (0, 255, 0), 2)
-
                 D_middle = dist.euclidean(refObj[1], (cX, cY)) / refObj[2]
                 if D_middle < min_dist_obstacle:
                     min_dist_obstacle = D_middle
                     height_obstacle = (box[len(box) - 1][1] - box[0][1]) / refObj[2]
                     width_obstacle = (box[1][0] - box[0][0]) / refObj[2]
-
+                    y_coord = box[len(box) - 1][1]
+                    # print(y_coord)
             # print(min_dist_obstacle, height_obstacle, width_obstacle)
-            return min_dist_obstacle, height_obstacle, width_obstacle
+            return min_dist_obstacle, height_obstacle, width_obstacle, y_coord
         except (Exception, ) as e:
-            return 1000000, 100000, 1000000
+            return 1000000, 100000, 1000000, 1000000
 

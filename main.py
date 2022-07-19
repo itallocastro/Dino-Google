@@ -3,11 +3,11 @@ from dino_env import DinoEnv
 from tile_coding import create_tilings, get_tile, create_weight, sum_weights
 import threading
 
-feature_ranges = [[5, 15], [0, 10], [0, 2], [0, 2]]
+feature_ranges = [[5, 15], [0, 10], [0, 2], [0, 2], [0, 150]]
 number_tilings = 8
 step = [(feature[1] - feature[0]) / number_tilings for feature in feature_ranges]
 print(step)
-bins = [[20, 60, 10, 10] for i in range(number_tilings)]
+bins = [[20, 50, 10, 10, 1] for i in range(number_tilings)]
 
 # 4 Tilings
 # offsets = [
@@ -19,14 +19,14 @@ bins = [[20, 60, 10, 10] for i in range(number_tilings)]
 
 # 8 tilings
 offsets = [
-    [0.0, 0.0, 0.0, 0.0],
-    [1.25, 1.25, 0.25, 0.25],
-    [-1.25, -1.25, -0.25, -0.25],
-    [-1.25, -1.25, 0.25, 0.25],
-    [1.25, 1.25, -0.25, -0.25],
-    [2.5, 2.5, 0.5, 0.5],
-    [-2.5, -2.5, -0.5, -0.5],
-    [-2.5, -2.5, 0.5, 0.5],
+    [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+    [1.25, 1.25, 0.25, 0.25, 0.0],
+    [-1.25, -1.25, -0.25, -0.25, 0.0],
+    [-1.25, -1.25, 0.25, 0.25, 0.0],
+    [1.25, 1.25, -0.25, -0.25, 0.0],
+    [2.5, 2.5, 0.5, 0.5, 0.0],
+    [-2.5, -2.5, -0.5, -0.5, 0.0],
+    [-2.5, -2.5, 0.5, 0.5, 0.0],
 ]
 
 tilings = create_tilings(feature_ranges, number_tilings, bins, offsets)
@@ -47,7 +47,7 @@ with open("score_per_100.txt", "rb") as f:
     scores_per_100 = list(np.load(f))
 
 def Q_Learning(ws, tilings, number_tilings, scores=[], scores_per_100=[], episodes=20000, thread=1, alpha=0.1,
-               gamma=0.99, epsilon=0.01):
+               gamma=0.99, epsilon=0.001):
     env = DinoEnv()
     print(episodes)
     # alpha = alpha / number_tilings
@@ -112,13 +112,12 @@ def Q_Learning(ws, tilings, number_tilings, scores=[], scores_per_100=[], episod
     return ws, scores, scores_per_100
 
 
-# ws_updated, scores, scores_per_100 = Q_Learning(ws, tilings, number_tilings, episodes=20000)
 
 threads = []
 num_threads = 8
 for i in range(num_threads):
     threads.append(threading.Thread(target=Q_Learning,
-                                    args=(ws, tilings, number_tilings, scores, scores_per_100, int(4000/num_threads), i)))
+                                    args=(ws, tilings, number_tilings, scores, scores_per_100, int(2000/num_threads), i)))
 for i in range(num_threads):
     threads[i].start()
 

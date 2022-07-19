@@ -69,7 +69,7 @@ for c in cnts:
             D = dist.euclidean((xA, yA), (xB, yB)) / refObj[2]
             dist_obstacle = D
             (mX, mY) = midpoint((xA, yA), (xB, yB))
-            cv2.putText(orig, "{:.1f}in".format(D), (int(mX), int(mY - 10)),
+            cv2.putText(orig, "{:.1f}".format(D), (int(mX), int(mY - 10)),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.55, color, 2)
             cv2.imshow("Image", orig)
             cv2.waitKey(0)

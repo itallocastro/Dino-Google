@@ -14,9 +14,11 @@ class DinoEnv(gym.Env):
     def __init__(self):
 
         self.action_space = spaces.Discrete(3)
-        # Velocity, Distance Obstacle; Height Obstacle; Width Obstacle
+
+        # Velocity, Distance Obstacle; Height Obstacle; Width Obstacle; Coord Y obstacle
         low_observation = np.array([
             5,
+            0,
             0,
             0,
             0
@@ -25,7 +27,8 @@ class DinoEnv(gym.Env):
             15,
             10,
             2,
-            2
+            2,
+            150
         ], dtype=np.float32, )
 
         self.observation_space = spaces.Box(low=low_observation, high=high_observation, dtype=np.float32)
@@ -71,14 +74,14 @@ class DinoEnv(gym.Env):
         obs = self.next_observation()
         done = self.get_done()
         reward = .1 if not done else -1
-        time.sleep(0.015)
+        # time.sleep(0.015)
 
         return obs, reward, done
 
     def next_observation(self):
         velocity = self.get_velocity()
-        min_dist_obstacle, height_obstacle, width_obstacle = self.get_values_in_image()
-        return velocity, min_dist_obstacle, height_obstacle, width_obstacle
+        min_dist_obstacle, height_obstacle, width_obstacle, y_coord = self.get_values_in_image()
+        return velocity, min_dist_obstacle, height_obstacle, width_obstacle, y_coord
 
     def get_velocity(self):
         return float(self._driver.execute_script("return Runner.instance_.currentSpeed"))
@@ -87,8 +90,8 @@ class DinoEnv(gym.Env):
         _img = self._driver.execute_script(
             "return document.querySelector('canvas.runner-canvas').toDataURL()"
         )
-        min_dist_obstacle, height_obstacle, width_obstacle = Distance.get_distance_image(_img)
-        return min_dist_obstacle, height_obstacle, width_obstacle
+        min_dist_obstacle, height_obstacle, width_obstacle, y_coord = Distance.get_distance_image(_img)
+        return min_dist_obstacle, height_obstacle, width_obstacle, y_coord
 
     def get_done(self):
         return not self._driver.execute_script("return Runner.instance_.playing")

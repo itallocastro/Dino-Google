@@ -5,11 +5,11 @@ import numpy as np
 from dino_env import DinoEnv
 from tile_coding import get_tile, sum_weights, create_tilings
 
-feature_ranges = [[5, 15], [0, 10], [0, 2], [0, 2]]
+feature_ranges = [[5, 15], [0, 10], [0, 2], [0, 2], [0, 150]]
 number_tilings = 8
 step = [(feature[1] - feature[0]) / number_tilings for feature in feature_ranges]
 print(step)
-bins = [[20, 60, 10, 10] for i in range(number_tilings)]
+bins = [[20, 50, 10, 10, 1] for i in range(number_tilings)]
 
 # 4 Tilings
 # offsets = [
@@ -21,14 +21,14 @@ bins = [[20, 60, 10, 10] for i in range(number_tilings)]
 
 # 8 tilings
 offsets = [
-    [0.0, 0.0, 0.0, 0.0],
-    [1.25, 1.25, 0.25, 0.25],
-    [-1.25, -1.25, -0.25, -0.25],
-    [-1.25, -1.25, 0.25, 0.25],
-    [1.25, 1.25, -0.25, -0.25],
-    [2.5, 2.5, 0.5, 0.5],
-    [-2.5, -2.5, -0.5, -0.5],
-    [-2.5, -2.5, 0.5, 0.5],
+    [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+    [1.25, 1.25, 0.25, 0.25, 0.0],
+    [-1.25, -1.25, -0.25, -0.25, 0.0],
+    [-1.25, -1.25, 0.25, 0.25, 0.0],
+    [1.25, 1.25, -0.25, -0.25, 0.0],
+    [2.5, 2.5, 0.5, 0.5, 0.0],
+    [-2.5, -2.5, -0.5, -0.5, 0.0],
+    [-2.5, -2.5, 0.5, 0.5, 0.0],
 ]
 
 tilings = create_tilings(feature_ranges, number_tilings, bins, offsets)
