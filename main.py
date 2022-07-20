@@ -28,16 +28,16 @@ tilings = create_tilings(feature_ranges, number_tilings, bins, offsets)
 #     get_tile([6.5, 4.2, 1.3, 0.9], tilings)
 # )
 
-# ws = np.array(create_weight(number_tilings, bins, 3))
-# scores = []
-# scores_per_100 = []
-with open("ws.txt", "rb") as f:
-    ws = np.load(f)
-with open("scores.txt", "rb") as f:
-    scores = list(np.load(f))
-    print(scores)
-with open("score_per_100.txt", "rb") as f:
-    scores_per_100 = list(np.load(f))
+ws = np.array(create_weight(number_tilings, bins, 3))
+scores = []
+scores_per_100 = []
+# with open("ws.txt", "rb") as f:
+#     ws = np.load(f)
+# with open("scores.txt", "rb") as f:
+#     scores = list(np.load(f))
+#     print(scores)
+# with open("score_per_100.txt", "rb") as f:
+#     scores_per_100 = list(np.load(f))
 
 def Q_Learning(ws, tilings, number_tilings, scores=[], scores_per_100=[], episodes=20000, thread=1, alpha=0.1,
                gamma=0.99, epsilon=0.001):
