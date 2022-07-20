@@ -9,7 +9,7 @@ feature_ranges = [[5, 15], [0, 10], [0, 2], [0, 2], [0, 150]]
 number_tilings = 8
 step = [(feature[1] - feature[0]) / number_tilings for feature in feature_ranges]
 print(step)
-bins = [[20, 50, 10, 10, 1] for i in range(number_tilings)]
+bins = [[30, 50, 10, 10, 10] for i in range(number_tilings)]
 
 # 4 Tilings
 # offsets = [
@@ -66,7 +66,7 @@ num_threads = 4
 best_scores = []
 for i in range(num_threads):
     threads.append(threading.Thread(target=best_play,
-                                    args=(ws, best_scores, 200, tilings, number_tilings, i)))
+                                    args=(ws, best_scores, 50, tilings, number_tilings, i)))
 for i in range(num_threads):
     threads[i].start()
 

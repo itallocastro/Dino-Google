@@ -7,15 +7,8 @@ feature_ranges = [[5, 15], [0, 10], [0, 2], [0, 2], [0, 150]]
 number_tilings = 8
 step = [(feature[1] - feature[0]) / number_tilings for feature in feature_ranges]
 print(step)
-bins = [[20, 50, 10, 10, 1] for i in range(number_tilings)]
-
-# 4 Tilings
-# offsets = [
-#     [0.0, 0.0, 0.0, 0.0],
-#     [2.5, 2.5, 0.5, 0.5],
-#     [-2.5, -2.5, -0.5, -0.5],
-#     [-2.5, -2.5, 0.5, 0.5]
-# ]
+# Velocity; Distance; Height; Width; Coord Y
+bins = [[30, 50, 10, 10, 10] for i in range(number_tilings)]
 
 # 8 tilings
 offsets = [
@@ -117,7 +110,7 @@ threads = []
 num_threads = 8
 for i in range(num_threads):
     threads.append(threading.Thread(target=Q_Learning,
-                                    args=(ws, tilings, number_tilings, scores, scores_per_100, int(2000/num_threads), i)))
+                                    args=(ws, tilings, number_tilings, scores, scores_per_100, int(1000/num_threads), i)))
 for i in range(num_threads):
     threads[i].start()
 

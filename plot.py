@@ -9,12 +9,12 @@ with open("score_per_100.txt", "rb") as f:
 with open("best_scores.txt", "rb") as f:
     bests = np.load(f)
 
-figure, axis = plt.subplots(3)
+figure, axis = plt.subplots(2)
 
 axis[0].plot(range(0, len(scores)), scores)
 
 axis[1].plot(range(0, len(scores_per_100)), scores_per_100)
 
-axis[2].plot(range(0, len(bests)), bests)
+# axis[2].plot(range(0, len(bests)), bests)
 
 plt.show()
